@@ -57,14 +57,7 @@ VALUES
     ('Aménagement du terrain'),
     ('Formation du personnel');
 
--- Inserting test data into the salaire table
-INSERT INTO salaire (montant)
-VALUES 
-    (1500.00),
-    (1200.50),
-    (1800.75),
-    (1300.25),
-    (1600.00);
+
 
 -- Inserting test data into the cueillette table
 INSERT INTO cueillette (idcueilleur, idparcelle, poids, date)
@@ -75,6 +68,11 @@ VALUES
     (4, 4, 600.8, '2024-02-04'),
     (5, 5, 550.3, '2024-02-05');
 
+INSERT INTO salaire (kgmin, kgmax, montant) VALUES
+    (0, 10, 100.00),
+    (11, 20, 150.50),
+    (21, 30, 200.75),
+    (31, 40, 250.25);
 
 
 INSERT INTO cueillette (idcueilleur, idparcelle, poids, date)

@@ -36,8 +36,12 @@ categorie text
 
 create table salaire(
 idsalaire serial primary key,
+kgmin float not null,
+kgmax float not null,
 montant decimal(10,2)
 );
+-- Insertion de données de test dans la table salaire
+
 
 
 create table cueillette(

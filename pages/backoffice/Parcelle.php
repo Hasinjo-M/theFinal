@@ -1,12 +1,10 @@
 <?php 
 include('../inc/Fonction.php');
 
-// Handling the form submission for the "parcelle" table
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numero = $_POST["numero"];
     $surface = $_POST["surface"];
-    $idvariete_the = $_POST["idvariete_the"]; // Assuming you have a dropdown/select for selecting the variety
-
+    $idvariete_the = $_POST["idvariete_the"]; 
     insert_parcelle($numero, $surface, $idvariete_the);
     header("Location: index.php?page=backoffice/Parcelle");
 }
