@@ -14,7 +14,7 @@ if ((!isset($_SESSION['role']) || !isset($_SESSION['idUtilisateur'])) && $page !
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/bootstrap-3.3.6-dist/css/bootstrap.css">
-    <script src="../assets/bootstrap-3.3.6-dist/js/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Thé</title>
 </head>
 
@@ -27,8 +27,8 @@ if ((!isset($_SESSION['role']) || !isset($_SESSION['idUtilisateur'])) && $page !
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li <?php echo ($page == 'backoffice/Cueillettes') ? 'class="active"' : ''; ?>>
-                            <a href="indexFront.php?page=backoffice/Cueillettes">Cueillettes</a>
+                        <li <?php echo ($page == 'frontoffice/Cueillettes') ? 'class="active"' : ''; ?>>
+                            <a href="indexFront.php?page=frontoffice/Cueillettes">Cueillettes</a>
                         </li>
                         
                     </ul>
@@ -37,7 +37,5 @@ if ((!isset($_SESSION['role']) || !isset($_SESSION['idUtilisateur'])) && $page !
         </nav>
         <?php include($page . '.php') ?>
     </div>
-    <script src="../assets/bootstrap-3.3.6-dist/js/jquery.js"></script>
-    <script src="../assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 </body>
 </html>

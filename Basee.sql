@@ -122,5 +122,11 @@ FROM
 JOIN
     variete_the v ON p.idvariete_the = v.idvariete_the;
 
+----view ceuillet personnne 
+create or replace view v_cueillette as 
+SELECT c.idcueillette, c.poids, c.date, cue.nom AS nom_cueilleur, p.numero AS numero_parcelle
+              FROM cueillette c
+              JOIN cueilleur cue ON c.idcueilleur = cue.idcueilleur
+              JOIN parcelle p ON c.idparcelle = p.idparcelle;
 
 

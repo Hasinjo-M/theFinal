@@ -164,6 +164,49 @@ function delete_salaire($idsalaire) {
     $sql = sprintf($sql, $idsalaire);
     mysqli_query(dbconnect(), $sql);
 }
+
+/**** Cueillette  */
+function insert_cueillette($idcueilleur, $idparcelle, $poids, $date) {
+    $query = sprintf("INSERT INTO cueillette (idcueilleur, idparcelle, poids, date) VALUES (%d, %d, %f, '%s')",
+                     $idcueilleur, $idparcelle, $poids, $date);
+    mysqli_query(dbconnect(), $query);
+}
+
+function delete_cueillette($idcueillette) {
+    $query = sprintf("DELETE FROM cueillette WHERE idcueillette = %d", $idcueillette); 
+    return execute_query($query);
+}
+
+function get_cueillettes() {
+    $sql = "SELECT *
+              FROM  v_cueillette  order by date";  
+    $result = mysqli_query(dbconnect(), $sql);
+    $cueillettes = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cueillettes[] = $row;
+    }
+    mysqli_free_result($result);
+    return $cueillettes;
+}
+
+
+/****** poids restant ù */
+function check_poids_restant($idparcelle, $poids, $date) {
+    $annee = date('Y', strtotime($date));
+    $mois = date('m', strtotime($date));
+    $query = "SELECT poids_restant FROM v_poids_restant WHERE idparcelle = %d and mois_recolte = %d AND annee_recolte = %d";
+    $sql = sprintf($query, $idparcelle, $mois, $annee);
+    $result = mysqli_query(dbconnect(), $sql);
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $poids_restant = $row['poids_restant'];
+            if($poids > $poids_restant) return false;
+        } return true;
+        mysqli_free_result($result);
+    } return false;
+}
+
 ?>
 
 
