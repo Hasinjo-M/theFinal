@@ -102,3 +102,21 @@ LEFT JOIN
 GROUP BY 
     c.date;
 
+
+----view parcelle 
+CREATE VIEW v_variete_parcelle AS
+SELECT
+    p.idparcelle,
+    p.numero,
+    p.surface,
+    v.idvariete_the,
+    v.nom AS nom_variete,
+    v.occupation,
+    v.rendement
+FROM
+    parcelle p
+JOIN
+    variete_the v ON p.idvariete_the = v.idvariete_the;
+
+
+

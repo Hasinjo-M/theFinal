@@ -34,3 +34,27 @@ function get_varietes_the() {
     return $varietes_the;
 }
 
+
+/**** Parcelle ***/
+function get_parcelles() {
+    $sql = "SELECT numero, surface, nom_variete
+            FROM v_variete_parcelle ";
+    $result = mysqli_query(dbconnect(), $sql);
+    $parcelles = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $parcelles[] = $row;
+    }
+    mysqli_free_result($result);
+    return $parcelles;
+}
+
+
+function insert_parcelle($numero, $surface, $idvariete_the) {
+    $sql = "INSERT INTO parcelle (numero, surface, idvariete_the) VALUES (%d, %f, %d)";
+    $sql = sprintf($sql, intval($numero), floatval($surface), intval($idvariete_the));
+    mysqli_query(dbconnect(), $sql);
+}
+
+?>
+
+

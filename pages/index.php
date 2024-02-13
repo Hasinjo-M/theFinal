@@ -14,6 +14,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : "login";
 
 <body>
     <div>
+        <a href="index.php?page=backoffice/Accueil">variete the</a>
+        <a href="index.php?page=backoffice/Parcelle"> parcelle</a>
+        
         <?php include($page . '.php') ?>
     </div>
     <script src=".../assets/bootstrap-3.3.6-dist/js/jquery.js"></script>
