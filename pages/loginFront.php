@@ -9,11 +9,11 @@
         if(Count($login) == 1){
             foreach ($login as $adm) {
                 $_SESSION['role'] = $adm['role'];
-                $_SESSION['id'] = $adm['idadmin'];
+                $_SESSION['idUtilisateur'] = $adm['idadmin'];
             } 
-            header("Location: index.php?page=backoffice/Accueil");
+            header("Location: index.php?page=frontoffice/Cueillettes");
         }else{
-            header("location: index.php?page=login&erreur=Il y a une erreur");
+            header("location: index.php?page=loginFront&erreur=Il y a une erreur");
         }
        
         exit;    
@@ -30,7 +30,7 @@
         <div class="shape col-md-6"></div>
         <div class="shape col-md-6"></div>
     </div>
-    <form  class="col-md-4" action="login.php" method="POST" >
+    <form  class="col-md-4" action="loginFront.php" method="POST" >
         <h3>Login Utilisateur</h3>
         <label for="#" style="Color :RED;" ><?php
             if(isset($_GET['erreur'])){echo $erreur;}

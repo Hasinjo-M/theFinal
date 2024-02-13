@@ -8,18 +8,22 @@
         $login = login($email,$mdp);
         if(Count($login) == 1){
             foreach ($login as $adm) {
+                if($adm['role'] != "Admin"){
+                    header("Location: login.php?erreur=Vous n'est pas administrateur");
+                    exit;    
+                }
                 $_SESSION['role'] = $adm['role'];
                 $_SESSION['id'] = $adm['idadmin'];
             } 
             header("Location: index.php?page=backoffice/Accueil");
         }else{
-            header("location: index.php?page=login&erreur=Il y a une erreur");
+            header("location: login.php?erreur=Il y a une erreur");
         }
        
         exit;    
     }
     if(isset($_GET['erreur'])){
-        $erreur = " il y une erreur";
+        $erreur = $_GET['erreur'];
     }
 
 ?>
