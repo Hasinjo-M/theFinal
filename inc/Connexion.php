@@ -3,7 +3,7 @@
 function dbconnect() {
     static $connect = null;
     if ($connect === null) {
-        $connect = mysqli_connect('localhost', 'root', '', 'the');
+        $connect = mysqli_connect('localhost', 'root', '', 'final');
     }
     return $connect;
 }

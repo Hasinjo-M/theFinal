@@ -236,6 +236,41 @@ function insert_depense($idcategorie_depense, $montant, $date) {
      mysqli_query($db, $query);
 }
 
+function get_poids_total()
+{
+    $sql = "SELECT * FROM v_poids_total";
+    $res = mysqli_query(dbconnect(), $sql);
+    $row = mysqli_fetch_assoc($res); 
+    mysqli_free_result($res);
+    return $row;
+}
+
+
+function get_poids_restant()
+{
+    $sql = "SELECT * FROM  v_poids_restant";  
+$result = mysqli_query(dbconnect(), $sql);
+$cueillettes = array();
+while ($row = mysqli_fetch_assoc($result)) {
+$cueillettes[] = $row;
+}
+mysqli_free_result($result);
+return $cueillettes;
+}
+
+
+
+function get_cout_revient()
+{
+    $sql = "SELECT * FROM  v_cout_revient";  
+$result = mysqli_query(dbconnect(), $sql);
+$cueillettes = array();
+while ($row = mysqli_fetch_assoc($result)) {
+$cueillettes[] = $row;
+}
+mysqli_free_result($result);
+return $cueillettes;
+}
 
 ?>
 

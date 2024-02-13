@@ -30,10 +30,17 @@ if ((!isset($_SESSION['role']) || !isset($_SESSION['idUtilisateur'])) && $page !
                         <li <?php echo ($page == 'frontoffice/Cueillettes') ? 'class="active"' : ''; ?>>
                             <a href="indexFront.php?page=frontoffice/Cueillettes">Cueillettes</a>
                         </li>
+
                         <li <?php echo ($page == 'frontoffice/Depense') ? 'class="active"' : ''; ?>>
                             <a href="indexFront.php?page=frontoffice/Depense">Depense</a>
                         </li>
-                        
+
+                        <li <?php echo ($page == 'frontoffice/Globale') ? 'class="active"' : ''; ?>>
+                            <a href="indexFront.php?page=frontoffice/Globale">Globale</a>
+                        </li>
+                        <li <?php echo ($page == 'backoffice/Deconnection') ? 'class="active"' : ''; ?>>
+                            <a href="index.php?page=backoffice/Deconnection">Déconnexion</a>
+                        </li>
                     </ul>
                 </div>
             </div>

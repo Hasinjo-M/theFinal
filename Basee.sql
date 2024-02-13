@@ -34,6 +34,8 @@ categorie text
 );
 
 
+
+
 create table salaire(
 idsalaire serial primary key,
 kgmin float not null,
@@ -96,6 +98,7 @@ ORDER BY
 
 --- cout de revient par kg 
 
+
 create or replace view v_cout_revient as 
 SELECT 
     COALESCE(SUM(d.montant), 0) / COALESCE(SUM(c.poids),1) AS cout_revient_par_kg
@@ -108,7 +111,7 @@ GROUP BY
 
 
 ----view parcelle 
-CREATE VIEW v_variete_parcelle AS
+CREATE OR REPLACE VIEW v_variete_parcelle AS
 SELECT
     p.idparcelle,
     p.numero,
@@ -130,3 +133,5 @@ SELECT c.idcueillette, c.poids, c.date, cue.nom AS nom_cueilleur, p.numero AS nu
               JOIN parcelle p ON c.idparcelle = p.idparcelle;
 
 
+create or replace view v_depense_categorie as 
+select d.* , c.categorie from depense d join categorie_depense c using(idcategorie_depense);
