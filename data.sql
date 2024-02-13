@@ -76,6 +76,11 @@ VALUES
     (5, 5, 550.3, '2024-02-05');
 
 
+
+INSERT INTO cueillette (idcueilleur, idparcelle, poids, date)
+VALUES
+    (1, 1, 529749.52, '2024-03-01');
+
 -- Inserting test data into the depense table
 INSERT INTO depense (idcategorie_depense, montant, date)
 VALUES

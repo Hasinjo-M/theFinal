@@ -63,20 +63,32 @@ SELECT ROUND(COALESCE(SUM(poids), 0.00), 2) AS poids_total
 FROM cueillette;
 
 
+
 -- poids restant sur les parcelles 
 
-create or replace view v_poids_restant as
+CREATE OR REPLACE VIEW v_poids_restant AS
 SELECT 
-p.idparcelle,
-    COALESCE((p.surface * vt.rendement) - COALESCE(SUM(c.poids), 0),0) AS poids_restant
+    p.idparcelle,
+    EXTRACT(MONTH FROM gs.mois) AS mois_recolte,
+    EXTRACT(YEAR FROM gs.mois) AS annee_recolte,
+    ROUND(COALESCE((p.surface * 10000 * vt.rendement) - COALESCE(SUM(c.poids), 0), 0), 2) AS poids_restant
 FROM 
     parcelle p
+CROSS JOIN (
+    SELECT DISTINCT DATE_FORMAT(c.date, '%Y-%m-01') AS mois
+    FROM cueillette c
+) gs
 LEFT JOIN 
-    cueillette c ON p.idparcelle = c.idparcelle
+    cueillette c ON p.idparcelle = c.idparcelle AND DATE_FORMAT(c.date, '%Y-%m-01') = gs.mois
 JOIN 
     variete_the vt ON p.idvariete_the = vt.idvariete_the
 GROUP BY 
-    p.idparcelle, p.surface, vt.rendement;
+    p.idparcelle, mois_recolte, annee_recolte, p.surface, vt.rendement
+ORDER BY 
+    annee_recolte, mois_recolte, p.idparcelle;
+
+
+
 
 --- cout de revient par kg 
 
