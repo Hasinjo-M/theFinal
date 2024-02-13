@@ -2,10 +2,18 @@
 include('../inc/Fonction.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom_cueilleur = $_POST["nom_cueilleur"];
-    $adresse_cueilleur = $_POST["adresse_cueilleur"];
-    insert_cueilleur($nom_cueilleur, $adresse_cueilleur);
-    header("Location: index.php?page=backoffice/Cueilleur");
+    if (isset($_POST["delete_cueilleur"])) {
+        $idcueilleur_to_delete = $_POST["delete_cueilleur"];
+        delete_cueilleur($idcueilleur_to_delete);
+        header("Location: index.php?page=backoffice/Cueilleur");
+    } elseif (isset($_POST["edit_cueilleur"])) {
+        $idcueilleur_to_edit = $_POST["edit_cueilleur"];
+    } else {
+        $nom_cueilleur = $_POST["nom_cueilleur"];
+        $adresse_cueilleur = $_POST["adresse_cueilleur"];
+        insert_cueilleur($nom_cueilleur, $adresse_cueilleur);
+        header("Location: index.php?page=backoffice/Cueilleur");
+    }
 }
 
 $cueilleurs = get_cueilleurs();
@@ -24,7 +32,6 @@ $cueilleurs = get_cueilleurs();
             <input type="text" class="form-control" id="adresse_cueilleur" name="adresse_cueilleur" required>
         </div>
 
-        <!-- Add a hidden field to identify which form is submitted -->
         <input type="hidden" name="cueilleur_submit" value="1">
 
         <button type="submit" class="btn btn-primary">Insérer Cueilleur</button>
@@ -39,6 +46,7 @@ $cueilleurs = get_cueilleurs();
                 <th>ID Cueilleur</th>
                 <th>Nom</th>
                 <th>Adresse</th>
+                <th>Actions</th> 
             </tr>
         </thead>
         <tbody>
@@ -47,6 +55,14 @@ $cueilleurs = get_cueilleurs();
                     <td><?= $cueilleur['idcueilleur']; ?></td>
                     <td><?= $cueilleur['nom']; ?></td>
                     <td><?= $cueilleur['adresse']; ?></td>
+                    <td>
+                        <a href="index.php?page=backoffice/Cueilleur&edit_cueilleur=<?= $cueilleur['idcueilleur']; ?>">Modifier</a>
+
+                        <form action="index.php?page=backoffice/Cueilleur" method="post" style="display:inline-block;">
+                            <input type="hidden" name="delete_cueilleur" value="<?= $cueilleur['idcueilleur']; ?>">
+                            <button type="submit" class="btn btn-link">Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

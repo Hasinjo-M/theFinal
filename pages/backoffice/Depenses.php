@@ -1,12 +1,20 @@
 <?php 
 include('../inc/Fonction.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $categorie_depense = $_POST["categorie_depense"];
-    insert_categorie_depense($categorie_depense);
-    header("Location: index.php?page=backoffice/Depenses");
+    if (isset($_POST["delete_categorie_depense"])) {
+        $idcategorie_depense_to_delete = $_POST["delete_categorie_depense"];
+        delete_categorie_depense($idcategorie_depense_to_delete);
+        header("Location: index.php?page=backoffice/Depenses");
+    } elseif (isset($_POST["edit_categorie_depense"])) {
+        $idcategorie_depense_to_edit = $_POST["edit_categorie_depense"];
+    } else {
+        $categorie_depense = $_POST["categorie_depense"];
+        insert_categorie_depense($categorie_depense);
+        header("Location: index.php?page=backoffice/Depenses");
+    }
 }
 
-$cueilleurs = get_cueilleurs();
 $categories_depense = get_categories_depense();
 ?>
 
@@ -33,6 +41,7 @@ $categories_depense = get_categories_depense();
             <tr>
                 <th>ID Catégorie</th>
                 <th>Catégorie</th>
+                <th>Actions</th> 
             </tr>
         </thead>
         <tbody>
@@ -40,6 +49,13 @@ $categories_depense = get_categories_depense();
                 <tr>
                     <td><?= $categorie_depense['idcategorie_depense']; ?></td>
                     <td><?= $categorie_depense['categorie']; ?></td>
+                    <td>
+                        <a href="index.php?page=backoffice/Depenses&edit_categorie_depense=<?= $categorie_depense['idcategorie_depense']; ?>">Modifier</a>
+                        <form action="index.php?page=backoffice/Depenses" method="post" style="display:inline-block;">
+                            <input type="hidden" name="delete_categorie_depense" value="<?= $categorie_depense['idcategorie_depense']; ?>">
+                            <button type="submit" class="btn btn-link">Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

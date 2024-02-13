@@ -2,15 +2,21 @@
 include('../inc/Fonction.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $numero = $_POST["numero"];
-    $surface = $_POST["surface"];
-    $idvariete_the = $_POST["idvariete_the"]; 
-    insert_parcelle($numero, $surface, $idvariete_the);
-    header("Location: index.php?page=backoffice/Parcelle");
+    if (isset($_POST["delete_parcelle"])) {
+        $idparcelle_to_delete = $_POST["delete_parcelle"];
+        delete_parcelle($idparcelle_to_delete);
+        header("Location: index.php?page=backoffice/Parcelle");
+    } else {
+        $numero = $_POST["numero"];
+        $surface = $_POST["surface"];
+        $idvariete_the = $_POST["idvariete_the"]; 
+        insert_parcelle($numero, $surface, $idvariete_the);
+        header("Location: index.php?page=backoffice/Parcelle");
+    }
 }
+
 $varietes_the = get_varietes_the();
 $parcelles = get_parcelles();
-
 ?>
 
 <div class="container mt-5">
@@ -44,6 +50,7 @@ $parcelles = get_parcelles();
                 <th>Numéro</th>
                 <th>Surface (m2)</th>
                 <th>Variété de Thé</th>
+                <th>Actions</th> 
             </tr>
         </thead>
         <tbody>
@@ -51,7 +58,13 @@ $parcelles = get_parcelles();
                 <tr>
                     <td><?= $parcelle['numero']; ?></td>
                     <td><?= $parcelle['surface']; ?></td>
-                    <td><?= $parcelle['nom_variete']; ?></td> <!-- Assuming you have a column for storing the variety name in the "parcelle" table -->
+                    <td><?= $parcelle['nom_variete']; ?></td>
+                    <td>
+                        <form action="index.php?page=backoffice/Parcelle" method="post" style="display:inline-block;">
+                            <input type="hidden" name="delete_parcelle" value="<?= $parcelle['idparcelle']; ?>">
+                            <button type="submit" class="btn btn-link">Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

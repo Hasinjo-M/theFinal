@@ -2,11 +2,16 @@
 include('../inc/Fonction.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $kgmin = $_POST["kgmin"];
-    $kgmax = $_POST["kgmax"];
-    $montant = $_POST["montant"];
-    insert_salaire($kgmin, $kgmax, $montant);
-    header("Location: index.php?page=backoffice/Salaire");
+    if (isset($_POST["delete_salaire"])) {
+        $idsalaire_to_delete = $_POST["delete_salaire"];
+        delete_salaire($idsalaire_to_delete);
+    } else {
+        $kgmin = $_POST["kgmin"];
+        $kgmax = $_POST["kgmax"];
+        $montant = $_POST["montant"];
+        insert_salaire($kgmin, $kgmax, $montant);
+        header("Location: index.php?page=backoffice/Salaire");
+    }
 }
 
 $salaires = get_salaires();
@@ -28,7 +33,6 @@ $salaires = get_salaires();
             <input type="number" class="form-control" id="montant" name="montant" required>
         </div>
 
-        <!-- Add a hidden field to identify which form is submitted -->
         <input type="hidden" name="salaire_submit" value="1">
 
         <button type="submit" class="btn btn-primary">Insérer Salaire</button>
@@ -43,6 +47,7 @@ $salaires = get_salaires();
                 <th>Kg Min</th>
                 <th>Kg Max</th>
                 <th>Montant</th>
+                <th>Actions</th> 
             </tr>
         </thead>
         <tbody>
@@ -51,6 +56,12 @@ $salaires = get_salaires();
                     <td><?= $salaire['kgmin']; ?></td>
                     <td><?= $salaire['kgmax']; ?></td>
                     <td><?= $salaire['montant']; ?></td>
+                    <td>
+                       <form action="index.php?page=backoffice/Salaire" method="post" style="display:inline-block;">
+                            <input type="hidden" name="delete_salaire" value="<?= $salaire['idsalaire']; ?>">
+                            <button type="submit" class="btn btn-link">Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

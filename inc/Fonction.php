@@ -14,15 +14,12 @@ function login($mail, $mdp){
     return $result; 
 }
 
-/**** Insert variete the ****/
+/**** variete the ****/
 function insert_variete_the($nom, $occupation, $rendement) {
     $sql = "INSERT INTO variete_the (nom, occupation, rendement) VALUES ('%s', %f, %f)";
     $sql = sprintf($sql, mysqli_real_escape_string(dbconnect(), $nom), floatval($occupation), floatval($rendement));
     mysqli_query(dbconnect(), $sql);
 }
-
-
-/***** liste variete the  */
 function get_varietes_the() {
     $sql = "SELECT idvariete_the, nom, occupation, rendement FROM variete_the";
     $result = mysqli_query(dbconnect(), $sql);
@@ -33,11 +30,22 @@ function get_varietes_the() {
     mysqli_free_result($result);
     return $varietes_the;
 }
+function update_variete_the($idvariete_the, $nom, $occupation, $rendement) {
+    $sql = "UPDATE variete_the SET nom='%s', occupation=%f, rendement=%f WHERE idvariete_the=%d";
+    $sql = sprintf($sql, mysqli_real_escape_string(dbconnect(), $nom), floatval($occupation), floatval($rendement), intval($idvariete_the));
+    mysqli_query(dbconnect(), $sql);
+}
+
+function delete_variete_the($idvariete_the) {
+    $sql = "DELETE FROM variete_the WHERE idvariete_the=%d";
+    $sql = sprintf($sql, intval($idvariete_the));
+    mysqli_query(dbconnect(), $sql);
+}
 
 
 /**** Parcelle ***/
 function get_parcelles() {
-    $sql = "SELECT numero, surface, nom_variete
+    $sql = "SELECT numero, surface, nom_variete, idparcelle
             FROM v_variete_parcelle ";
     $result = mysqli_query(dbconnect(), $sql);
     $parcelles = array();
@@ -48,7 +56,13 @@ function get_parcelles() {
     return $parcelles;
 }
 
-
+function delete_parcelle($idparcelle) {
+    $conn = dbconnect();
+    $sql = "DELETE FROM parcelle WHERE idparcelle=%d";
+    $sql = sprintf($sql, intval($idparcelle));
+    mysqli_query($conn, $sql);
+    mysqli_close($conn);
+}
 function insert_parcelle($numero, $surface, $idvariete_the) {
     $sql = "INSERT INTO parcelle (numero, surface, idvariete_the) VALUES (%d, %f, %d)";
     $sql = sprintf($sql, intval($numero), floatval($surface), intval($idvariete_the));
@@ -75,15 +89,20 @@ function get_cueilleurs() {
 }
 
 function update_cueilleur($idcueilleur, $nom, $adresse) {
+    $conn = dbconnect();
     $sql = "UPDATE cueilleur SET nom='%s', adresse='%s' WHERE idcueilleur=%d";
-    $sql = sprintf($sql, mysqli_real_escape_string(dbconnect(), $nom), mysqli_real_escape_string(dbconnect(), $adresse), intval($idcueilleur));
-    mysqli_query(dbconnect(), $sql);
+    $sql = sprintf($sql, mysqli_real_escape_string($conn, $nom), mysqli_real_escape_string($conn, $adresse), intval($idcueilleur));
+    mysqli_query($conn, $sql);
+    mysqli_close($conn);
 }
 
 function delete_cueilleur($idcueilleur) {
+    $conn = dbconnect();
     $sql = "DELETE FROM cueilleur WHERE idcueilleur=%d";
     $sql = sprintf($sql, intval($idcueilleur));
-    mysqli_query(dbconnect(), $sql);
+    mysqli_query($conn, $sql);
+
+    mysqli_close($conn);
 }
 
 /**** categories depenses */
@@ -105,6 +124,22 @@ function get_categories_depense() {
     return $categories_depense;
 }
 
+function update_categorie_depense($idcategorie_depense, $categorie) {
+    $conn = dbconnect();
+    $sql = "UPDATE categorie_depense SET categorie='%s' WHERE idcategorie_depense=%d";
+    $sql = sprintf($sql, mysqli_real_escape_string($conn, $categorie), intval($idcategorie_depense));
+    mysqli_query($conn, $sql);
+    mysqli_close($conn);
+}
+
+function delete_categorie_depense($idcategorie_depense) {
+    $conn = dbconnect();
+    $sql = "DELETE FROM categorie_depense WHERE idcategorie_depense=%d";
+    $sql = sprintf($sql, intval($idcategorie_depense));
+    mysqli_query($conn, $sql);
+    mysqli_close($conn);
+}
+
 
 /**** Salaire ***/
 function insert_salaire($kgmin, $kgmax, $montant) {
@@ -122,6 +157,12 @@ function get_salaires() {
     }
     mysqli_free_result($result);
     return $salaires;
+}
+
+function delete_salaire($idsalaire) {
+    $sql = "DELETE FROM salaire WHERE idsalaire = %d";
+    $sql = sprintf($sql, $idsalaire);
+    mysqli_query(dbconnect(), $sql);
 }
 ?>
 
