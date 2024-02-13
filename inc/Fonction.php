@@ -207,6 +207,36 @@ function check_poids_restant($idparcelle, $poids, $date) {
     } return false;
 }
 
+/***** Delete deponse  ***/
+function delete_depense($iddepense) {
+    $query = "DELETE FROM depense WHERE iddepense = %d";
+    $query = sprintf($query, $iddepense);
+    $conn = dbconnect(); 
+    mysqli_query($conn, $query);
+}
+
+function get_depenses(){
+    $sql = "SELECT *
+              FROM  v_depense_categorie  order by date";  
+    $result = mysqli_query(dbconnect(), $sql);
+    $cueillettes = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cueillettes[] = $row;
+    }
+    mysqli_free_result($result);
+    return $cueillettes;
+}
+
+function insert_depense($idcategorie_depense, $montant, $date) {
+    $db = dbconnect(); 
+     $idcategorie_depense = mysqli_real_escape_string($db, $idcategorie_depense);
+    $montant = mysqli_real_escape_string($db, $montant);
+    $date = mysqli_real_escape_string($db, $date);
+    $query = "INSERT INTO depense (idcategorie_depense, montant, date) VALUES ('$idcategorie_depense', '$montant', '$date')";
+     mysqli_query($db, $query);
+}
+
+
 ?>
 
 
