@@ -8,7 +8,6 @@
         $login = login($email,$mdp);
         if(Count($login) == 1){
             foreach ($login as $adm) {
-                echo $adm['mail']."  ".$adm['role'];
                 $_SESSION['role'] = $adm['role'];
                 $_SESSION['id'] = $adm['idadmin'];
             } 
@@ -44,8 +43,6 @@
 
         <input class="button" type="submit" value="Log In">
         
-        <div class="newcompte">
-            <div class="go"><a href="index.php?page=inscription">Create an account</a> </div>
-        </div>
+        
     </form>
 </div> 

@@ -1,6 +1,13 @@
 <?php
 session_start();
 $page = isset($_GET['page']) ? $_GET['page'] : "login";
+
+// Check if the role and id session variables are not set and the page is not 'login'
+if ((!isset($_SESSION['role']) || !isset($_SESSION['id'])) && $page != 'login') {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +17,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "login";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="../assets/bootstrap-3.3.6-dist/js/jquery.js"></script>
-    <title>Your Page Title</title>
+    <title>Thé</title>
 </head>
 
 <body>
@@ -36,6 +43,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : "login";
                         </li>
                         <li <?php echo ($page == 'backoffice/Salaire') ? 'class="active"' : ''; ?>>
                             <a href="index.php?page=backoffice/Salaire">Salaire</a>
+                        </li>
+                        <li <?php echo ($page == 'backoffice/Deconnection') ? 'class="active"' : ''; ?>>
+                            <a href="index.php?page=backoffice/Deconnection">Déconnexion</a>
                         </li>
                     </ul>
                 </div>
