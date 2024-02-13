@@ -2,9 +2,7 @@
 session_start();
 $page = isset($_GET['page']) ? $_GET['page'] : "login";
 
-// Check if the role and id session variables are not set and the page is not 'login'
 if ((!isset($_SESSION['role']) || !isset($_SESSION['id'])) && $page != 'login') {
-    // Redirect to the login page
     header("Location: login.php");
     exit();
 }
