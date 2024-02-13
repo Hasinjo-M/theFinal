@@ -11,15 +11,15 @@
                 $_SESSION['role'] = $adm['role'];
                 $_SESSION['idUtilisateur'] = $adm['idadmin'];
             } 
-            header("Location: index.php?page=frontoffice/Cueillettes");
+            header("Location: indexFront.php?page=frontoffice/Cueillettes");
         }else{
-            header("location: index.php?page=loginFront&erreur=Il y a une erreur");
+            header("location: loginFront?erreur=Il y a une erreur");
         }
        
         exit;    
     }
     if(isset($_GET['erreur'])){
-        $erreur = " il y une erreur";
+        $erreur = $_GET['erreur'];
     }
 
 ?>
