@@ -55,6 +55,48 @@ function insert_parcelle($numero, $surface, $idvariete_the) {
     mysqli_query(dbconnect(), $sql);
 }
 
+/***** Cueilleur */
+
+function insert_cueilleur($nom, $adresse) {
+    $sql = "INSERT INTO cueilleur (nom, adresse) VALUES ('%s', '%s')";
+    $sql = sprintf($sql, mysqli_real_escape_string(dbconnect(), $nom), mysqli_real_escape_string(dbconnect(), $adresse));
+    mysqli_query(dbconnect(), $sql);
+}
+
+function get_cueilleurs() {
+    $sql = "SELECT * FROM cueilleur";
+    $result = mysqli_query(dbconnect(), $sql);
+    $cueilleurs = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cueilleurs[] = $row;
+    }
+    mysqli_free_result($result);
+    return $cueilleurs;
+}
+
+/**** categories depenses */
+
+function insert_categorie_depense($categorie) {
+    $sql = "INSERT INTO categorie_depense (categorie) VALUES ('%s')";
+    $sql = sprintf($sql, mysqli_real_escape_string(dbconnect(), $categorie));
+    mysqli_query(dbconnect(), $sql);
+}
+
+function get_categories_depense() {
+    $sql = "SELECT * FROM categorie_depense";
+    $result = mysqli_query(dbconnect(), $sql);
+    $categories_depense = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $categories_depense[] = $row;
+    }
+    mysqli_free_result($result);
+    return $categories_depense;
+}
+
 ?>
+
+
+?>
+
 
 

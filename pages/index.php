@@ -14,8 +14,10 @@ $page = isset($_GET['page']) ? $_GET['page'] : "login";
 
 <body>
     <div>
-        <a href="index.php?page=backoffice/Accueil">variete the</a>
-        <a href="index.php?page=backoffice/Parcelle"> parcelle</a>
+        <a href="index.php?page=backoffice/Accueil">Variete the</a>
+        <a href="index.php?page=backoffice/Parcelle"> Parcelle</a>
+        <a href="index.php?page=backoffice/Cueilleur"> Cueilleur</a>
+        <a href="index.php?page=backoffice/Depenses"> Categorie depense</a>
         
         <?php include($page . '.php') ?>
     </div>
